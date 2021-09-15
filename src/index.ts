@@ -12,7 +12,7 @@ function ListMemberReset(this: any, o: ListMember){
 
 function ListMemberFactory(this: any){return {priority: 0, member: 0}}
 
-const priorityPool = new ObjectPool<ListMember>(50, 100, ListMemberFactory, ListMemberReset)
+const priorityPool = new ObjectPool<ListMember>(50, 200, ListMemberFactory, ListMemberReset)
 
 export class PriorityList<T> {
     list: { priority: number; member: T }[];
@@ -98,5 +98,15 @@ export class PriorityList<T> {
         lm && priorityPool.free(lm);
 
         return c;
+    }
+
+    /**
+     * Returns all the members to the pool
+     */
+    free() {
+        for (const i of $range(1, this.list.length)) {
+            const o = this.list[i - 1];
+            priorityPool.free(o);
+        }
     }
 }
