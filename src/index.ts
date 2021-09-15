@@ -36,17 +36,13 @@ export class PriorityList<T> {
 
         if (this.list.length < 1) {
             table.insert(this.list, listM);
-        }
-
-        if (this.list.length < 2) {
+        } else if (this.list.length < 2) {
             if (this.list[0].priority < priority) {
                 table.insert(this.list, 2, listM);
             } else {
                 table.insert(this.list, 1, listM);
             }
-        }
-
-        if (this.list.length >= 2) {
+        } else if (this.list.length >= 2) {
             let insertIndex = binarySearch.findInsert(this.list, "priority", priority)
 
             table.insert(this.list, insertIndex, listM);
@@ -97,7 +93,7 @@ export class PriorityList<T> {
         const c = this.list[this.list.length - 1].member;
         this.presence.delete(c);
 
-        const lm = table.remove(this.list, this.list.length);
+        const lm = table.remove(this.list);
 
         lm && priorityPool.free(lm);
 

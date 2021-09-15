@@ -1,6 +1,6 @@
 {
   "name": "lua-priority-list",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Lua priority list",
   "main": "index.lua",
   "scripts": {
@@ -23,7 +23,7 @@
     "url": "https://github.com/qeffects/lua-priority-list"
   },
   "dependencies": {
-    "lua-bin-search": "^1.0.1",
+    "lua-bin-search": "^1.0.4",
     "lua-object-pool": "^1.0.3",
     "lua-types": "^2.10.1",
     "typescript-to-lua": "^1.0.1"
