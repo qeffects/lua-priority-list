@@ -18,25 +18,22 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:  
-    - env:
+        
+    env:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+      
+    steps:  
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-    - run: npm run-script git-publish
-    - run: cp package.json ./dist/
-    - run: cp package-lock.json ./dist/
-    - run: cp README.md ./dist/
-    - run: cp LICENSE ./dist/
-    - run: cp .npmrc ./dist/
+    - run: npm install && npm run-script git-publish
+    - run: cp package.json ./dist/ && cp package-lock.json ./dist/ && cp README.md ./dist/ && cp LICENSE ./dist/ && cp .npmrc ./dist/
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
     - run: cd dist
-    - run: npm publish
+    - continue-on-error: true
+      run: npm publish
