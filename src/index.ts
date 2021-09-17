@@ -1,5 +1,6 @@
 import { binarySearch } from "lua-bin-search";
 import { ObjectPool } from "lua-object-pool";
+import { fastRemove } from "./fastRemove";
 
 interface ListMember {
     priority: number; member: any
@@ -69,7 +70,7 @@ export class PriorityList<T> {
      */
     remove(member: T): void {
         const i = this.find(member);
-        const lm = table.remove(this.list, i)
+        const lm = fastRemove(this.list, i)
 
         this.presence.delete(member);
 

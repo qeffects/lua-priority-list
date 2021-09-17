@@ -1,0 +1,1 @@
+export function fastRemove<V>(list: V[], index: number): V 
