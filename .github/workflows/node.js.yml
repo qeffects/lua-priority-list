@@ -38,11 +38,15 @@ jobs:
       run: npm publish
   
   deploy: 
+    needs: build
     runs-on: ubuntu-latest
-    env:
-      COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
     
     steps:
+      - uses: actions/checkout@v2      
+      - name: Set Env Var
+        uses: allenevans/set-env@v2.0.0
+        with:
+          COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
       - run: echo ${{env.COMMIT_MSG}}
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
