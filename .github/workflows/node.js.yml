@@ -31,8 +31,7 @@ jobs:
         cp README.md ./dist/
         cp LICENSE ./dist/
         cp .npmrc ./dist/
-        mkdir ./dist/.git
-        cp -r .git ./dist/.git
+        cp -r .git ./dist/
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
