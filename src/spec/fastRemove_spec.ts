@@ -20,6 +20,6 @@ describe('Fast Remove', () => {
         assert.is_equal(fastRemove(list, 4), 4);
         assert.is_equal(fastRemove(list, 3), 3);
         assert.is_equal(fastRemove(list, 2), 2);
-        assert.is_equal(fastRemove(list, 1), 5);
+        assert.is_equal(fastRemove(list, 1), 1);
     })
 })
