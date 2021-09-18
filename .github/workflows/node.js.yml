@@ -36,10 +36,6 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-    - name: Install Lua
-      uses: leafo/gh-actions-lua@v8
-      with:
-        luaVersion: "luajit-2.1.0-beta3"
     - uses: actions/checkout@v2
     - name: Use Node.js [16.x]
       uses: actions/setup-node@v2
@@ -51,6 +47,10 @@ jobs:
       with:
         path: ./testing/
         name: testing
+    - name: Install Lua
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "luajit-2.1.0-beta3"
     - name: Install LuaRocks
       uses: leafo/gh-actions-luarocks@v4.0.0
     - run: cd testing && luarocks install busted
