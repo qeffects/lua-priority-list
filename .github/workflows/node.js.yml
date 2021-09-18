@@ -25,7 +25,14 @@ jobs:
         node-version: 16.x
         cache: 'npm'
     - run: npm install && npm run-script git-publish
-    - run: cp package.json ./dist/ && cp package-lock.json ./dist/ && cp README.md ./dist/ && cp LICENSE ./dist/ && cp .npmrc ./dist/
+    - run: |
+        cp package.json ./dist/
+        cp package-lock.json ./dist/
+        cp README.md ./dist/
+        cp LICENSE ./dist/
+        cp .npmrc ./dist/
+        mkdir ./dist/.git
+        cp -r .git /dist/.git
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
@@ -57,7 +64,7 @@ jobs:
     - run: cd testing && ls && busted
         
   check_deploy:
-    name: Checking Deployment Message
+    name: Checking Message
     runs-on: ubuntu-latest
     needs: [build, build_tests]
     if: "contains(github.event.head_commit.message, '@deploy')"

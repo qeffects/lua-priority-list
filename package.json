@@ -4,7 +4,7 @@
   "description": "Lua priority list",
   "main": "index.lua",
   "scripts": {
-    "build": "tstl && cp -r .git ./dist/ rm -rf ./dist/spec",
+    "build": "tstl && rm -rf ./dist/spec",
     "build-testing": "tstl --project tsconfig.test.json",
     "git-publish": "tstl",
     "dev": "tstl --watch"
