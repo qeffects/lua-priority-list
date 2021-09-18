@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
-    - run: npm install && npm run-script git-publish
+    - run: npm install && npm run-script build
     - run: |
         cp README.md ./dist/
         cp LICENSE ./dist/
