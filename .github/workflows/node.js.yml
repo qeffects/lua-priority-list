@@ -13,33 +13,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        
     env:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
       
     steps:  
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js [16.x]
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16.x
         cache: 'npm'
     - run: npm install && npm run-script git-publish
     - run: cp package.json ./dist/ && cp package-lock.json ./dist/ && cp README.md ./dist/ && cp LICENSE ./dist/ && cp .npmrc ./dist/
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
-    - run: cd dist
-    - continue-on-error: true
-      run: npm publish
-  
+        
   deploy: 
     needs: build
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
     
     steps:
       - uses: actions/checkout@v2      
@@ -47,7 +41,22 @@ jobs:
         uses: allenevans/set-env@v2.0.0
         with:
           COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
-      - run: echo ${{env.COMMIT_MSG}}
+      - name: Check if commit msg includes @deploy-to-npm
+        if: contains(${{env.COMMIT_MSG}}, "@deploy-to-npm")
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
-      - run: ls -R
+      - name: Move to Artifact folder
+        run: cd artifact
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: npm bump
+        uses: bcomnes/npm-bump@v2.0.2
+        with:
+          git_email: qfluxstudio@gmail.com
+          git_username: github.actor
+          newversion: patch
+          push_version_commit: true
+          npm_token: ${{secrets.NPM_ACCESS_TOKEN}}
