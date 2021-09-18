@@ -38,7 +38,7 @@ export class PriorityList<T> {
         if (this.list.length < 1) {
             table.insert(this.list, listM);
         } else if (this.list.length < 2) {
-            if (this.list[0].priority < priority) {
+            if (this.list[1-1].priority > priority) {
                 table.insert(this.list, 2, listM);
             } else {
                 table.insert(this.list, 1, listM);

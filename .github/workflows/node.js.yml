@@ -29,6 +29,28 @@ jobs:
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
+        name: build
+
+  test:
+    name: Build TSTL Tests and Run them
+    runs-on: ubuntu-latest
+      
+    steps:
+    - name: Install LuaRocks
+      uses: leafo/gh-actions-luarocks@v4.0.0
+    - uses: actions/checkout@v2
+    - name: Use Node.js [16.x]
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    - run: npm install && npm run-script build-testing
+    - uses: actions/upload-artifact@v2.2.4
+      with:
+        path: ./testing/
+        name: testing
+    - run: cd testing && luarocks install busted
+    - run: busted
         
   deploy: 
     name: Deploy Artifact
@@ -41,6 +63,7 @@ jobs:
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
+        name: build
       - name: Move to Artifact folder
         run: cd artifact
       - name: Use Node.js 16.x

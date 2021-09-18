@@ -4,7 +4,8 @@
   "description": "Lua priority list",
   "main": "index.lua",
   "scripts": {
-    "build": "tstl && mv ./dist/* .",
+    "build": "tstl",
+    "build-testing": "tstl --project tsconfig.test.json",
     "git-publish": "tstl",
     "dev": "tstl --watch"
   },
@@ -28,5 +29,8 @@
     "lua-object-pool": "^1.0.3",
     "lua-types": "^2.10.1",
     "typescript-to-lua": "^1.0.1"
+  },
+  "devDependencies": {
+    "busted-tstl": "^0.1.2-rc.0"
   }
 }
