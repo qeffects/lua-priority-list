@@ -74,7 +74,6 @@ jobs:
   deploy: 
     name: Deploy To NPM
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '@deploy')"
     needs: check_deploy
     env:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
@@ -91,7 +90,6 @@ jobs:
           node-version: 16.x
           cache: 'npm'
       - name: npm bump
-        uses: bcomnes/npm-bump@v2.0.2
-        with:
-          newversion: patch
-          npm_token: ${{secrets.NPM_ACCESS_TOKEN}}
+        run: | 
+          npm version patch -f -m "Auto NPM version bump [skip ci]"
+          npm publish
