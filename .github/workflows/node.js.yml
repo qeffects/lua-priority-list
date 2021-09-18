@@ -32,7 +32,7 @@ jobs:
         cp LICENSE ./dist/
         cp .npmrc ./dist/
         mkdir ./dist/.git
-        cp -r .git /dist/.git
+        cp -r .git ./dist/.git
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./dist/
