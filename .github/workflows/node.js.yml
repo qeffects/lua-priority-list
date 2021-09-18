@@ -56,11 +56,17 @@ jobs:
     - run: luarocks install busted
     - run: cd testing && ls && busted
         
+  check_deploy:
+    name: Checking Deployment Message
+    runs-on: ubuntu-latest
+    needs: [build, build_tests]
+    if: "contains(github.event.head_commit.message, '@deploy')"
+    
   deploy: 
     name: Deploy To NPM
     runs-on: ubuntu-latest
     if: "contains(github.event.head_commit.message, '@deploy')"
-    needs: [build, build_tests]
+    needs: check_deploy
     env:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
     
