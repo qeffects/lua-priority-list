@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: Build TSTL Artifact
     runs-on: ubuntu-latest
 
     env:
@@ -38,14 +39,6 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
     
     steps:
-      - uses: actions/checkout@v2      
-      - name: Set Env Var
-        uses: allenevans/set-env@v2.0.0
-        with:
-          COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
-      - name: Check if commit msg includes @deploy-to-npm
-        if: contains(${{env.COMMIT_MSG}}, "@deploy-to-npm")
-        run: echo Proceeding with deployment
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
       - name: Move to Artifact folder
@@ -58,7 +51,7 @@ jobs:
       - name: npm bump
         uses: bcomnes/npm-bump@v2.0.2
         with:
-          git_email: qfluxstudio@gmail.com
+          git_email: monke@blah.com
           git_username: github.actor
           newversion: patch
           push_version_commit: true
