@@ -88,6 +88,7 @@ jobs:
           git config user.email "qfluxstudio@gmail.com"
           git config user.name "qeffects"
           npm version patch -f -m "Auto NPM version bump [skip ci]"
+          git push --follow-tags
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
         with:
