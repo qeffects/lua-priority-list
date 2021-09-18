@@ -49,10 +49,10 @@ jobs:
       - name: Move to Artifact folder
         run: cd artifact
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v2.1.1
+        uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
       - name: npm bump
         uses: bcomnes/npm-bump@v2.0.2
         with:
