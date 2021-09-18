@@ -62,9 +62,8 @@ jobs:
       uses: leafo/gh-actions-luarocks@v4.0.0
     - name: Install Busted
       run: luarocks install busted
-    - run: cd testing && ls
     - name: Running Tests
-      run: busted
+      run: cd testing && ls && busted
         
   check_deploy:
     name: Checking Message
