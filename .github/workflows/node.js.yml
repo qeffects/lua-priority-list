@@ -53,8 +53,8 @@ jobs:
         luaVersion: "luajit-2.1.0-beta3"
     - name: Install LuaRocks
       uses: leafo/gh-actions-luarocks@v4.0.0
-    - run: cd testing && luarocks install busted
-    - run: busted
+    - run: luarocks install busted
+    - run: ls && cd testing && busted -o
         
   deploy: 
     name: Deploy Artifact
