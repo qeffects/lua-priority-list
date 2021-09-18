@@ -43,7 +43,7 @@ jobs:
       COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
     
     steps:
-      - run: echo ${{COMMIT_MSG}}
+      - run: echo ${{env.COMMIT_MSG}}
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
       - run: ls -R
