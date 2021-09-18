@@ -63,7 +63,6 @@ jobs:
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
-        name: build
       - name: Move to Artifact folder
         run: cd artifact
       - name: Use Node.js 16.x
