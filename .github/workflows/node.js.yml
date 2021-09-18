@@ -26,8 +26,6 @@ jobs:
         cache: 'npm'
     - run: npm install && npm run-script git-publish
     - run: |
-        cp package.json ./dist/
-        cp package-lock.json ./dist/
         cp README.md ./dist/
         cp LICENSE ./dist/
         cp .npmrc ./dist/
@@ -79,11 +77,7 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
     
     steps:
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v2.0.10
-        with:
-          name: build
-          path: .
+      - uses: actions/checkout@v2
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
@@ -91,5 +85,17 @@ jobs:
           cache: 'npm'
       - name: npm bump
         run: | 
+          git config user.email "qfluxstudio@gmail.com"
+          git config user.name "qeffects"
           npm version patch -f -m "Auto NPM version bump [skip ci]"
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.10
+        with:
+          name: build
+          path: build
+      - name: npm publish
+        run: |
+          cp package.json ./build/
+          cp package-lock.json ./build/
+          cd build
           npm publish
