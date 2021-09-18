@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build TSTL Artifact
+    name: Building Artifact
     runs-on: ubuntu-latest
 
     env:
@@ -32,7 +32,7 @@ jobs:
         name: build
 
   build_tests:
-    name: Build Tests
+    name: Acceptance Testing
     runs-on: ubuntu-latest
       
     steps:
@@ -57,9 +57,9 @@ jobs:
     - run: cd testing && ls && busted
         
   deploy: 
-    name: Deploy Artifact
+    name: Deploy To NPM
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '@deploy-to-npm')"
+    if: "contains(github.event.head_commit.message, '@deploy')"
     needs: [build, build_tests]
     env:
       NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
@@ -67,8 +67,10 @@ jobs:
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
+        with:
+          name: build
       - name: Move to Artifact folder
-        run: cd artifact
+        run: cd build
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
