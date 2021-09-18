@@ -43,6 +43,7 @@ jobs:
           COMMIT_MSG: $(git log --format=%B -n 1 ${{ github.event.after }})
       - name: Check if commit msg includes @deploy-to-npm
         if: contains(${{env.COMMIT_MSG}}, "@deploy-to-npm")
+        run: echo Proceeding with deployment
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
       - name: Move to Artifact folder
