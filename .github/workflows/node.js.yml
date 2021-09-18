@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -37,3 +36,15 @@ jobs:
     - run: cd dist
     - continue-on-error: true
       run: npm publish
+  
+  deploy: 
+    env:
+      commit_msg: $(git log --format=%B -n 1 ${{ github.event.after }})
+      
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: echo ${{commit_msg}}
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.10
+      - run: ls -R
