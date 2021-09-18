@@ -1,6 +1,6 @@
 {
   "name": "lua-priority-list",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Lua priority list",
   "main": "index.lua",
   "scripts": {
