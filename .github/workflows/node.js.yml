@@ -24,8 +24,10 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
-    - run: npm install && npm run-script build
-    - run: |
+    - name: Install Node Modules
+      run: npm install && npm run-script build
+    - name: Prepare build artifact
+      run: |
         cp README.md ./dist/
         cp LICENSE ./dist/
         cp .npmrc ./dist/
@@ -46,7 +48,8 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
-    - run: npm install && npm run-script build-testing
+    - name: Npm Install && Build with Testing preset
+      run: npm install && npm run-script build-testing
     - uses: actions/upload-artifact@v2.2.4
       with:
         path: ./testing/
@@ -57,8 +60,11 @@ jobs:
         luaVersion: "luajit-2.1.0-beta3"
     - name: Install LuaRocks
       uses: leafo/gh-actions-luarocks@v4.0.0
-    - run: luarocks install busted
-    - run: cd testing && ls && busted
+    - name: Install Busted
+      run: luarocks install busted
+    - run: cd testing && ls
+    - name: Running Tests
+      run: busted
         
   check_deploy:
     name: Checking Message
@@ -94,7 +100,7 @@ jobs:
         with:
           name: build
           path: build
-      - name: npm publish
+      - name: Publish NPM
         run: |
           cp package.json ./build/
           cp package-lock.json ./build/
