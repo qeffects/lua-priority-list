@@ -20,7 +20,7 @@
     ]
   },
   "tstl": {
-    "luaLibImport": "none",
+    "luaLibImport": "inline",
     "buildMode": "library",
     "luaTarget": "JIT",
     "noImplicitSelf": true,

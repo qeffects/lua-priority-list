@@ -17,7 +17,9 @@ const priorityPool = new ObjectPool<ListMember>(50, 200, ListMemberFactory, List
 
 export class PriorityList<T> {
     list: { priority: number; member: T }[];
+
     private presence: LuaTable<T, boolean>;
+
     constructor() {
         this.list = [];
         this.presence = new LuaTable<T, boolean>();
